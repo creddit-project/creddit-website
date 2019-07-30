@@ -29,6 +29,16 @@ exports.register = async (req, res, next) => {
   }
 };
 
+exports.getCrypto = async(req, res, next) => {
+    const username = req.params.user;
+    const user = await User.findOne({ username });
+
+    res.json({
+        balance: user.balance,
+        depositAddress: user.depositAddress
+    });
+};
+
 exports.validate = method => {
   const errors = [
     body('username')

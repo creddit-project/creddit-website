@@ -6,12 +6,13 @@ import CategoryMenuContainer from '../CategoryMenu/Container';
 import PostListContainer from '../PostList/Container';
 import PostDetailContainer from '../PostDetail/Container';
 import SidebarContainer from '../Sidebar/Container';
+import AccountInfo from '../AccountInfo/Container';
 
 const Wrapper = styled.div`
   display: flex;
   align-items: flex-start;
   margin: 0 10vw;
-  
+
   @media (max-width: 1024px) {
     margin: 0 5vw;
   }
@@ -27,29 +28,14 @@ const Home = () => (
     <HomeMainSection>
       <Route component={CategoryMenuContainer} />
       <Route exact path='/' component={PostListContainer} />
-      <Route
-        exact
-        path='/a/:category'
-        render={({ match }) => (
-          <PostListContainer category={match.params.category} />
-        )}
-      />
-      <Route
-        exact
-        path='/u/:username'
-        render={({ match }) => (
-          <PostListContainer username={match.params.username} />
-        )}
-      />
-      <Route
-        exact
-        path='/a/:category/:post'
-        render={({ match, history }) => (
-          <PostDetailContainer id={match.params.post} history={history} />
-        )}
-      />
+      <Route exact path='/a/:category' render={({ match }) => (<PostListContainer category={match.params.category} />)}/>
+      <Route exact path='/u/:username' render={({ match }) => (<PostListContainer username={match.params.username} />)}/>
+      <Route exact path='/ub/:username' render={({ match }) => (<AccountInfo username={match.params.username} />)} />
+      <Route exact path='/a/:category/:post' render={({ match, history }) => (<PostDetailContainer id={match.params.post} history={history} />)}/>
     </HomeMainSection>
-    <Route component={SidebarContainer} />
+    <Route exact path='/' component={SidebarContainer} />
+    <Route exact path='/a/:category' component={SidebarContainer} />
+    <Route exact path='/a/:category/:post' component={SidebarContainer} />
   </Wrapper>
 );
 

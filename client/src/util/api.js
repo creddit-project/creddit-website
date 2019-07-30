@@ -76,6 +76,10 @@ export async function signup (username, password) {
   return json.token;
 }
 
+export async function getAccountInfo(username) {
+    return await methods.get(`userbalance/${username}`);
+}
+
 export async function getPosts (category) {
   return await methods.get(`posts/${category}`);
 }
