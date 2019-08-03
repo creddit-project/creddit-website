@@ -76,6 +76,13 @@ export async function signup (username, password) {
   return json.token;
 }
 
+export async function getBalance(username) {
+    const accountInfo = await methods.get(`userbalance/${username}`);
+    const balance = accountInfo[0].balance;
+
+    return balance;
+}
+
 export async function getAccountInfo(username) {
     return await methods.get(`userbalance/${username}`);
 }

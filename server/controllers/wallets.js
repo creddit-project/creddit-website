@@ -22,18 +22,21 @@ exports.generateAddress = () => {
 exports.getBalance = async (req, res) => {
   const username = req.params.user;
   const user = await User.findOne({ username });
-  let wallet = await Wallet.find({ owner: user.id });
+  let wallet = await Wallet.findOne({ owner: user.id });
 
-  const address = await this.generateAddress();
-  const owner = user.id;
-  const balance = 0;
+  if (!wallet || wallet.length === 0) {
+    const address = await this.generateAddress();
+    const owner = user.id;
+    const balance = 0;
 
-  if (!wallet || wallet.length === 0)
     wallet = await Wallet.create({
       owner,
       address,
       balance
     });
+  }
+
+  wallet.triggerSave();
 
   res.json(wallet);
 };

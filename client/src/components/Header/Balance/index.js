@@ -11,7 +11,7 @@ const Wrapper = styled(HeaderNavLink)`
 `;
 
 const HeaderBalance = props => (
-  <Wrapper to={`/ub/${props.username}`}>
+  <Wrapper to={`/u/${props.username}`}>
     <HeaderBalanceText>{`${props.balance} CRDD`}</HeaderBalanceText>
   </Wrapper>
 );

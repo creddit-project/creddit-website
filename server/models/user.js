@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema({
 }, { collation: { locale: 'en', strength: 1 } });
 
 userSchema.set('toJSON', { getters: true });
-userSchema.options.toJSON.transform = (doc, ret) => {
+userSchema.options.toJSON.transform = async (doc, ret) => {
   const obj = { ...ret };
 
   delete obj._id;
@@ -29,6 +29,12 @@ userSchema.pre('save', async function (next) {
 
 userSchema.methods.isValidPassword = async function (password) {
   return await bcrypt.compare(password, this.password);
+};
+
+userSchema.methods.assignWallet = function(id) {
+  this.wallet = id;
+
+  return this.save();
 };
 
 const User = mongoose.model('User', userSchema);
