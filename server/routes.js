@@ -1,6 +1,7 @@
 const users = require('./controllers/users');
 const posts = require('./controllers/posts');
 const comments = require('./controllers/comments');
+const wallets = require('./controllers/wallets');
 const { jwtAuth, postAuth, commentAuth } = require('./auth');
 const router = require('express').Router();
 
@@ -18,8 +19,8 @@ router.get('/post/:post/downvote', jwtAuth, posts.downvote);
 router.get('/post/:post/unvote', jwtAuth, posts.unvote);
 
 router.get('/user/:user', posts.listByUser);
-router.get('/userbalance/:user', users.getCrypto);
 
+router.get('/userbalance/:user', wallets.getBalance);
 
 router.param('comment', comments.load);
 router.post('/post/:post', [jwtAuth, comments.validate], comments.create);

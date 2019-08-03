@@ -1,11 +1,12 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const Wallet = require('./wallet');
+const Schema = mongoose.Schema;
 
 const userSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  depositAddress: String,
-  balance: Number,
+  wallet: { type: Schema.Types.ObjectId, ref: 'Wallet' },
   admin: Boolean
 }, { collation: { locale: 'en', strength: 1 } });
 
@@ -22,9 +23,6 @@ userSchema.options.toJSON.transform = (doc, ret) => {
 
 userSchema.pre('save', async function (next) {
   this.password = await bcrypt.hash(this.password, 10);
-
-  this.balance = this.balance ? parseFloat(this.balance) : parseFloat('0.00');
-  this.depositAddress = this.depositAddress ? this.depositAddress : '0xPlaceHolderAddress';
 
   next();
 });

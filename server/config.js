@@ -14,5 +14,10 @@ module.exports = {
   jwt: {
     secret: process.env.JWT_SECRET || 'development_secret',
     expiry: '7d'
+  },
+  coin: {
+    name: 'Creddit',
+    host: '127.0.0.1',
+    port: '20000'
   }
 };
